@@ -41,12 +41,6 @@ print("\n  JOB OVERVIEW:")
 print("\n>>> Machine Learning Framework Using Device:     [ \'" + device.type + "\' ]\n")
 print("##### All ARGS of the program:\n",args)
 
-#if device.type == "cuda":
-#	print("##### Device Info:")
-#	print(paddle.device.get_device())
-#	print(paddle.device.cuda.get_device_name(0))
-#	print(paddle.device.cuda.device_count())
-
 #seed_everything(args.seed)
 torch.backends.cuda.matmul.allow_tf32 = True
 
