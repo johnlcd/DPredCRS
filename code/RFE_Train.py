@@ -8,7 +8,6 @@ import warnings
 import pickle as pkl
 import dpctl
 from sklearnex import patch_sklearn, config_context
-#import paddle
 
 #import utils_rfe
 from utils_rfe import load_data_gp, DataSet, seed_everything
