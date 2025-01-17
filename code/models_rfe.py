@@ -139,12 +139,12 @@ class ML:
 		},
 		{
 			'kernel':['rbf'],
-			'C': [0.1, 1, 10, 100],
-			'gamma': [0.001, 0.0001]
+			'C': [0.1, 1, 10],
+			'gamma': [0.01, 0.001]
 		},
 		{	
 			'kernel':['poly'],
-			'C': [0.1, 1, 10, 100],
+			'C': [0.1, 1, 10],
 			'degree': [1, 3, 5]
 		}]
 		model = GridSearchCV(SVC(random_state=self.seed, probability=True), param_grid, cv=5, n_jobs=3, scoring=self.scorer, verbose=1)
@@ -154,7 +154,7 @@ class ML:
 	def lsvm_classifier(self, gscv=False):
 		from sklearn.svm import SVC
 		param_grid = {
-			'C': [0.1, 1, 10, 100, 1000],
+			'C': [0.1, 1, 10, 100],
 		}
 		if (gscv!=False):
 			model = GridSearchCV(SVC(kernel='linear', random_state=self.seed, probability=True), param_grid, cv=5, n_jobs=3, scoring=self.scorer, verbose=1)
@@ -166,7 +166,7 @@ class ML:
 		from sklearn.svm import SVC
 		param_grid = {
 			'C': [0.1, 1, 10],
-			'gamma': [0.1, 0.01, 'auto'],
+			'gamma': [0.01, 0.001, 'auto'],
 		}
 		model = GridSearchCV(SVC(kernel='rbf',random_state=self.seed, probability=True), param_grid, cv=5, n_jobs=3, scoring=self.scorer, verbose=1)
 		#model = SVC(kernel='rbf',probability=True)
