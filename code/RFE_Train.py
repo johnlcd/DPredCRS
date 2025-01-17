@@ -8,9 +8,7 @@ import warnings
 import pickle as pkl
 import dpctl
 from sklearnex import patch_sklearn, config_context
-#import paddle
 
-#import utils_rfe
 from utils_rfe import load_data_gp, DataSet, seed_everything, make_result_dir
 from models_rfe import ML
 
@@ -34,8 +32,8 @@ parser.add_argument('--min_fs', type=int, default=1, help='Minimum Number of Fea
 parser.add_argument('--step', type=float, default=1, help='Step Size of Feature Selection (defult: [ 1 ])')
 parser.add_argument('--nf_select', type=int, default=10, help='Number of Features to Select (defult: [ 10 ], \"--func rfe\")')
 parser.add_argument('--model_save_file', type=str, default="None", help='File to Save Machine Learning Model (defult: [ \"None\" ])')
-parser.add_argument('--dpath', type=str, default="/home/chenjiabin/project/DVT/data/All_comb/before_surgery", help='Data Path for Feature Matrix (defult: [ "/home/chenjiabin/project/DVT/data/All_comb/before_surgery" ])', required=True)
-parser.add_argument('--rpath', type=str, default="/home/chenjiabin/project/DVT/model_pred/results/before_surgery", help='Result Directory (defult: [ "/home/chenjiabin/project/DVT/model_pred/results/before_surgery" ])', required=True)
+parser.add_argument('--dpath', type=str, help='Data Path for Feature Matrix', required=True)
+parser.add_argument('--rpath', type=str, help='Result Directory', required=True)
 
 args = parser.parse_args()
 device = torch.device("cuda" if (torch.cuda.is_available() and args.cpu != 1) else "cpu")
@@ -44,12 +42,6 @@ print("\n  JOB OVERVIEW:")
 print("\n>>> Machine Learning Framework Using Device:     [ \'" + device.type + "\' ]\n")
 print("##### All ARGS of the program:\n",args)
 
-#if device.type == "cuda":
-#	print("##### Device Info:")
-#	print(paddle.device.get_device())
-#	print(paddle.device.cuda.get_device_name(0))
-#	print(paddle.device.cuda.device_count())
-
 #seed_everything(args.seed)
 torch.backends.cuda.matmul.allow_tf32 = True
 
@@ -57,7 +49,6 @@ torch.backends.cuda.matmul.allow_tf32 = True
 print("\n\n\n===============================================  Loading DataSet  ================================================")
 print("\n##### DataSet:     [ \"{}\" ] ".format(args.dataset))
 print("\n##### RAPT score for grouping:     [ \"{}\" ] ".format(args.rapt))
-#data_path = "/home/chenjiabin/project/DVT/data/All_comb/before_surgery"
 data_path = args.dpath
 if (not os.path.exists(data_path)):
 	print("!!! Data path do not exist.")
@@ -71,7 +62,6 @@ model = ML(args)
 
 ## Feature selection, Training and Evaluation
 ### feature selection
-#result_path = "/home/chenjiabin/project/DVT/model_pred/results/before_surgery"
 result_path = args.rpath
 make_result_dir(result_path)
 model_save_f0 = "{}/model_save/{}_R{}_G0_{}_RFE.pkl".format(result_path, args.dataset, args.rapt, args.rfe_classifier)
