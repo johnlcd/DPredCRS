@@ -18,11 +18,7 @@
 
 ## Usage
 
-***RFE_Train.py*** [-h] [--cpu {0,1}] [--fs {0,1}] [--seed SEED] --dataset DATASET --rapt {5,6,7,8,9,10,11,12,13,14} 
-	                 [--func {rfecv,rfe}] [--rfe_classifier {RF,LR,LSVM}] 
-	                 [--classifier {RF,NB,KNN,LR,DT,LSVM,SVMR,SVMP,GBDT}] [--scorer {roc_auc,f1}] [--nest NEST]
-	                 [--mdepth MDEPTH] [--min_fs MIN_FS] [--step STEP] [--nf_select NF_SELECT] 
-	                 [--model_save_file MODEL_SAVE_FILE] --dpath DPATH --rpath RPATH
+***RFE_Train.py*** [-h] [--cpu {0,1}] [--fs {0,1}] [--seed SEED] --dataset DATASET --rapt {5,6,7,8,9,10,11,12,13,14} [--func {rfecv,rfe}] [--rfe_classifier {RF,LR,LSVM}] [--classifier {RF,NB,KNN,LR,DT,LSVM,SVMR,SVMP,GBDT}] [--scorer {roc_auc,f1}] [--nest NEST] [--mdepth MDEPTH] [--min_fs MIN_FS] [--step STEP] [--nf_select NF_SELECT] [--model_save_file MODEL_SAVE_FILE] --dpath DPATH --rpath RPATH
 
 ### optional arguments:
 
@@ -50,9 +46,9 @@
 	--rpath RPATH         Result Directory
 
 ### Examples:
-	**[1] Feature selection:**
+	[1] ***Feature selection:***
 	RFE_Train.py --dataset DS --rapt RAPT --model_save_file AA --cpu CPU --fs 1 --seed SEED --dpath /path/to/data --rpath /path/to/results 
-	**[2] Model training and evaluation:**
+	[2] ***Model training and evaluation:***
 	RFE_Train.py --dataset DS --rapt RAPT --model_save_file BB --classifier CLF --cpu CPU --fs 0 --seed SEED --dpath /path/to/data --rpath /path/to/results 
 
 
