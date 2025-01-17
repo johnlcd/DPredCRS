@@ -41,5 +41,11 @@
 >   --dpath DPATH         Data Path for Feature Matrix<br>
 >   --rpath RPATH         Result Directory<br>
 
+> Examples:<br>
+> [1] Feature selection:<br>
+> RFE_Train.py --dataset DS --rapt RAPT --model_save_file AA --cpu CPU --fs 1 --seed SEED --dpath /path/to/data --rpath /path/to/results <br>
+> [2] Model training and evaluation:<br> 
+> RFE_Train.py --dataset DS --rapt RAPT --model_save_file BB --classifier CLF --cpu CPU --fs 0 --seed SEED --dpath /path/to/data --rpath /path/to/results <br>
+
 
 
