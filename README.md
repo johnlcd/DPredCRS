@@ -46,9 +46,9 @@
 	--rpath RPATH         Result Directory
 
 ### Examples:
-	[1] ***Feature selection:***
+[1] ***Feature selection:***
 	RFE_Train.py --dataset DS --rapt RAPT --model_save_file AA --cpu CPU --fs 1 --seed SEED --dpath /path/to/data --rpath /path/to/results 
-	[2] ***Model training and evaluation:***
+[2] ***Model training and evaluation:***
 	RFE_Train.py --dataset DS --rapt RAPT --model_save_file BB --classifier CLF --cpu CPU --fs 0 --seed SEED --dpath /path/to/data --rpath /path/to/results 
 
 
