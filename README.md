@@ -17,9 +17,11 @@
 <br>
 
 ## Usage
-> **RFE_Train.py** [-h] [--cpu {0,1}] [--fs {0,1}] [--seed SEED] --dataset DATASET --rapt {5,6,7,8,9,10,11,12,13,14} [--func {rfecv,rfe}]
-                    [--rfe_classifier {RF,LR,LSVM}] [--classifier {RF,NB,KNN,LR,DT,LSVM,SVMR,SVMP,GBDT}] [--scorer {roc_auc,f1}] [--nest NEST]
-                    [--mdepth MDEPTH] [--min_fs MIN_FS] [--step STEP] [--nf_select NF_SELECT] [--model_save_file MODEL_SAVE_FILE] --dpath DPATH --rpath RPATH
+> **RFE_Train.py** [-h] [--cpu {0,1}] [--fs {0,1}] [--seed SEED] --dataset DATASET --rapt {5,6,7,8,9,10,11,12,13,14} 
+>                  [--func {rfecv,rfe}] [--rfe_classifier {RF,LR,LSVM}] 
+>                  [--classifier {RF,NB,KNN,LR,DT,LSVM,SVMR,SVMP,GBDT}] [--scorer {roc_auc,f1}] [--nest NEST]
+>                  [--mdepth MDEPTH] [--min_fs MIN_FS] [--step STEP] [--nf_select NF_SELECT] 
+>                  [--model_save_file MODEL_SAVE_FILE] --dpath DPATH --rpath RPATH
 
 ### optional arguments:
 
