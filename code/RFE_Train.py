@@ -9,7 +9,7 @@ import pickle as pkl
 import dpctl
 from sklearnex import patch_sklearn, config_context
 
-from utils_rfe import load_data_gp, DataSet, seed_everything, make_result_dir
+from utils_rfe import load_data_gp, DataSet, seed_everything
 from models_rfe import ML
 
 
@@ -23,8 +23,9 @@ parser.add_argument('--seed', type=int, default=0, help='Random Seed (default: [
 parser.add_argument('--dataset', type=str, default='Clinical_Meta_Geno', help='Dataset Prefix', required=True)
 parser.add_argument('--rapt', type=str, default='10', choices=['5','6','7','8','9','10','11','12','13','14'], help='RAPT Score for Grouping', required=True)
 parser.add_argument('--func', type=str, default='rfecv', choices=['rfecv','rfe'], help='Function of Feature Selection (default: [ \"rfecv\" ])')
-parser.add_argument('--rfe_classifier', type=str, default='RF', choices=['RF','LR','LSVM'], help='Feature selection Classifier (default: [ \"RF\" ] (RandomForest Classifier))')
-parser.add_argument('--classifier', type=str, default='RF', choices=['RF','NB','KNN','LR','DT','LSVM','SVMR',"SVMP",'GBDT'], help='Machine Learning Classifier (default: [ \"RF\" ] (RandomForest Classifier))')
+parser.add_argument('--gs_classifier', type=str, default='RF', choices=['RF','LSVM','RSVM','PSVM'], help='GridSearch (HyperParameter Optimize) Classifier (default: [ \"RF\" ] (RandomForest Classifier))')
+parser.add_argument('--rfe_classifier', type=str, default='RF', choices=['RF','LR','SVM'], help='Feature selection Classifier (default: [ \"RF\" ] (RandomForest Classifier))')
+parser.add_argument('--classifier', type=str, default='RF', choices=['RF','NB','KNN','LR','DT','LSVM','RSVM','PSVM','GBDT'], help='Machine Learning Classifier (default: [ \"RF\" ] (RandomForest Classifier))')
 parser.add_argument('--scorer', type=str, default='roc_auc', choices=['roc_auc','f1'], help='Scorer of Model Performace (default: [ \"roc_auc\" ])')
 parser.add_argument('--nest', type=int, default=100, help='Number of Estimators (Trees) (defult: [ 100 ], \"--rfe_classifier RF\")')
 parser.add_argument('--mdepth', type=int, default=2, help='Max Depth of Tree (defult: [ 2 ], \"--rfe_classifier RF\")')
@@ -32,7 +33,7 @@ parser.add_argument('--min_fs', type=int, default=1, help='Minimum Number of Fea
 parser.add_argument('--step', type=float, default=1, help='Step Size of Feature Selection (defult: [ 1 ])')
 parser.add_argument('--nf_select', type=int, default=10, help='Number of Features to Select (defult: [ 10 ], \"--func rfe\")')
 parser.add_argument('--model_save_file', type=str, default="None", help='File to Save Machine Learning Model (defult: [ \"None\" ])')
-parser.add_argument('--dpath', type=str, help='Data Path for Feature Matrix', required=True)
+parser.add_argument('--dpath', type=str, help='Data Path of Feature Matrix', required=True)
 parser.add_argument('--rpath', type=str, help='Result Directory', required=True)
 
 args = parser.parse_args()
@@ -42,7 +43,6 @@ print("\n  JOB OVERVIEW:")
 print("\n>>> Machine Learning Framework Using Device:     [ \'" + device.type + "\' ]\n")
 print("##### All ARGS of the program:\n",args)
 
-#seed_everything(args.seed)
 torch.backends.cuda.matmul.allow_tf32 = True
 
 ## load dataset
@@ -50,9 +50,6 @@ print("\n\n\n===============================================  Loading DataSet  =
 print("\n##### DataSet:     [ \"{}\" ] ".format(args.dataset))
 print("\n##### RAPT score for grouping:     [ \"{}\" ] ".format(args.rapt))
 data_path = args.dpath
-if (not os.path.exists(data_path)):
-	print("!!! Data path do not exist.")
-	exit()
 data0 = load_data_gp(data_path, args.dataset, args.rapt, 0, args.seed).to(device)
 data1 = load_data_gp(data_path, args.dataset, args.rapt, 1, args.seed).to(device)
 data2 = load_data_gp(data_path, args.dataset, args.rapt, 2, args.seed).to(device)
@@ -63,7 +60,6 @@ model = ML(args)
 ## Feature selection, Training and Evaluation
 ### feature selection
 result_path = args.rpath
-make_result_dir(result_path)
 model_save_f0 = "{}/model_save/{}_R{}_G0_{}_RFE.pkl".format(result_path, args.dataset, args.rapt, args.rfe_classifier)
 model_save_f1 = "{}/model_save/{}_R{}_G1_{}_RFE.pkl".format(result_path, args.dataset, args.rapt, args.rfe_classifier)
 model_save_f2 = "{}/model_save/{}_R{}_G2_{}_RFE.pkl".format(result_path, args.dataset, args.rapt, args.rfe_classifier)
